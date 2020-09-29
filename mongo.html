@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-09-28 Mon 16:45 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mongo</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Mongo</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#show-all-databases">1. Show All Databases</a></li>
+<li><a href="#show-current-database">2. Show Current Database</a></li>
+<li><a href="#create-or-switch-database">3. Create Or Switch Database</a></li>
+<li><a href="#drop">4. Drop</a></li>
+<li><a href="#create-collection">5. Create Collection</a></li>
+<li><a href="#show-collections">6. Show Collections</a></li>
+<li><a href="#insert-document">7. Insert Document</a></li>
+<li><a href="#insert-multiple-documents">8. Insert Multiple Documents</a></li>
+<li><a href="#get-all-documents">9. Get All Documents</a></li>
+<li><a href="#get-all-documents-formatted">10. Get All Documents Formatted</a></li>
+<li><a href="#find-documents">11. Find Documents</a></li>
+<li><a href="#sort-documents">12. Sort Documents</a></li>
+<li><a href="#count-documents">13. Count Documents</a></li>
+<li><a href="#limit-documents">14. Limit Documents</a></li>
+<li><a href="#chaining">15. Chaining</a></li>
+<li><a href="#foreach">16. Foreach</a></li>
+<li><a href="#find-one-document">17. Find One Document</a></li>
+<li><a href="#find-specific-fields">18. Find Specific Fields</a></li>
+<li><a href="#update-document">19. Update Document</a></li>
+<li><a href="#update-multiple-document">20. Update Multiple Document</a></li>
+<li><a href="#increment-field-inc">21. Increment Field ($inc)</a></li>
+<li><a href="#rename-field">22. Rename Field</a></li>
+<li><a href="#delete-document">23. Delete Document</a></li>
+<li><a href="#sub-documents">24. Sub-Documents</a></li>
+<li><a href="#find-by-element-in-array-elemmatch">25. Find By Element in Array ($elemMatch)</a></li>
+<li><a href="#add-index">26. Add Index</a></li>
+<li><a href="#text-search">27. Text Search (Single Word)</a></li>
+<li><a href="#text-search">28. Text Search (Match Any of the Search Terms)</a></li>
+<li><a href="#text-search">29. Text Search (a Phrase)</a></li>
+<li><a href="#greater-less-than">30. Greater &amp; Less Than</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd9981f7" class="outline-2">
+<h2 id="show-all-databases"><span class="section-number-2">1</span> Show All Databases</h2>
+<div class="outline-text-2" id="text-show-all-databases">
+<div class="org-src-container">
+<pre class="src src-Javascript">show dbs
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5a03c68" class="outline-2">
+<h2 id="show-current-database"><span class="section-number-2">2</span> Show Current Database</h2>
+<div class="outline-text-2" id="text-show-current-database">
+<div class="org-src-container">
+<pre class="src src-Javascript">db
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgea40ad5" class="outline-2">
+<h2 id="create-or-switch-database"><span class="section-number-2">3</span> Create Or Switch Database</h2>
+<div class="outline-text-2" id="text-create-or-switch-database">
+<div class="org-src-container">
+<pre class="src src-Javascript">use acme
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org01b8f8b" class="outline-2">
+<h2 id="drop"><span class="section-number-2">4</span> Drop</h2>
+<div class="outline-text-2" id="text-drop">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.dropDatabase()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8bae81c" class="outline-2">
+<h2 id="create-collection"><span class="section-number-2">5</span> Create Collection</h2>
+<div class="outline-text-2" id="text-create-collection">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.createCollection('posts')
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1523805" class="outline-2">
+<h2 id="show-collections"><span class="section-number-2">6</span> Show Collections</h2>
+<div class="outline-text-2" id="text-show-collections">
+<div class="org-src-container">
+<pre class="src src-Javascript">show collections
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcfbea2e" class="outline-2">
+<h2 id="insert-document"><span class="section-number-2">7</span> Insert Document</h2>
+<div class="outline-text-2" id="text-insert-document">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.insertOne({
+  title: 'Post One',
+  body: 'Body of post one',
+  category: 'News',
+  tags: ['news', 'events'],
+  user: {
+    name: 'John Doe',
+    status: 'author'
+  },
+  date: Date()
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org59f7542" class="outline-2">
+<h2 id="insert-multiple-documents"><span class="section-number-2">8</span> Insert Multiple Documents</h2>
+<div class="outline-text-2" id="text-insert-multiple-documents">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.insertMany([
+  {
+    title: 'Post Two',
+    body: 'Body of post two',
+    category: 'Technology',
+    date: Date()
+  },
+  {
+    title: 'Post Three',
+    body: 'Body of post three',
+    category: 'News',
+    date: Date()
+  },
+  {
+    title: 'Post Four',
+    body: 'Body of post three',
+    category: 'Entertainment',
+    date: Date()
+  }
+])
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf51b8f4" class="outline-2">
+<h2 id="get-all-documents"><span class="section-number-2">9</span> Get All Documents</h2>
+<div class="outline-text-2" id="text-get-all-documents">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f2b326" class="outline-2">
+<h2 id="get-all-documents-formatted"><span class="section-number-2">10</span> Get All Documents Formatted</h2>
+<div class="outline-text-2" id="text-get-all-documents-formatted">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.find().pretty()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7cf3f9a" class="outline-2">
+<h2 id="find-documents"><span class="section-number-2">11</span> Find Documents</h2>
+<div class="outline-text-2" id="text-find-documents">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find({ category: 'News' })
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge59d0d7" class="outline-2">
+<h2 id="sort-documents"><span class="section-number-2">12</span> Sort Documents</h2>
+<div class="outline-text-2" id="text-sort-documents">
+<div class="org-src-container">
+<pre class="src src-Javascript"># asc
+db.posts.find().sort({ title: 1 }).pretty()
+# desc
+db.posts.find().sort({ title: -1 }).pretty()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge0a254f" class="outline-2">
+<h2 id="count-documents"><span class="section-number-2">13</span> Count Documents</h2>
+<div class="outline-text-2" id="text-count-documents">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find().count()
+db.posts.find({ category: 'news' }).count()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org31ac94d" class="outline-2">
+<h2 id="limit-documents"><span class="section-number-2">14</span> Limit Documents</h2>
+<div class="outline-text-2" id="text-limit-documents">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find().limit(2).pretty()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb94808a" class="outline-2">
+<h2 id="chaining"><span class="section-number-2">15</span> Chaining</h2>
+<div class="outline-text-2" id="text-chaining">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find().limit(2).sort({ title: 1 }).pretty()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcdbb7d1" class="outline-2">
+<h2 id="foreach"><span class="section-number-2">16</span> Foreach</h2>
+<div class="outline-text-2" id="text-foreach">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find().forEach(function(doc) {
+  print("Blog Post: " + doc.title)
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge61bcd8" class="outline-2">
+<h2 id="find-one-document"><span class="section-number-2">17</span> Find One Document</h2>
+<div class="outline-text-2" id="text-find-one-document">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.findOne({ category: 'News' })
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge186002" class="outline-2">
+<h2 id="find-specific-fields"><span class="section-number-2">18</span> Find Specific Fields</h2>
+<div class="outline-text-2" id="text-find-specific-fields">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find({ title: 'Post One' }, {
+  title: 1,
+  author: 1
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf08f482" class="outline-2">
+<h2 id="update-document"><span class="section-number-2">19</span> Update Document</h2>
+<div class="outline-text-2" id="text-update-document">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.updateOne({ title: 'Post Two' },
+{
+  $set: {
+    body: 'Body for post 2',
+    category: 'Technology'
+  }
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge02a24e" class="outline-2">
+<h2 id="update-multiple-document"><span class="section-number-2">20</span> Update Multiple Document</h2>
+<div class="outline-text-2" id="text-update-multiple-document">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.updateMany({ title: 'Post Two' },
+{
+  $set: {
+    body: 'Body for post 2',
+    category: 'Technology'
+  }
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9ad4268" class="outline-2">
+<h2 id="increment-field-inc"><span class="section-number-2">21</span> Increment Field ($inc)</h2>
+<div class="outline-text-2" id="text-increment-field-inc">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.update({ title: 'Post Two' },
+{
+  $inc: {
+    likes: 5
+  }
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org55cccb9" class="outline-2">
+<h2 id="rename-field"><span class="section-number-2">22</span> Rename Field</h2>
+<div class="outline-text-2" id="text-rename-field">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.update({ title: 'Post Two' },
+{
+  $rename: {
+    likes: 'views'
+  }
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org844c1a9" class="outline-2">
+<h2 id="delete-document"><span class="section-number-2">23</span> Delete Document</h2>
+<div class="outline-text-2" id="text-delete-document">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.remove({ title: 'Post Four' })
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org81dd980" class="outline-2">
+<h2 id="sub-documents"><span class="section-number-2">24</span> Sub-Documents</h2>
+<div class="outline-text-2" id="text-sub-documents">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.update({ title: 'Post One' },
+{
+  $set: {
+    comments: [
+      {
+	body: 'Comment One',
+	user: 'Mary Williams',
+	date: Date()
+      },
+      {
+	body: 'Comment Two',
+	user: 'Harry White',
+	date: Date()
+      }
+    ]
+  }
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5a7ab44" class="outline-2">
+<h2 id="find-by-element-in-array-elemmatch"><span class="section-number-2">25</span> Find By Element in Array ($elemMatch)</h2>
+<div class="outline-text-2" id="text-find-by-element-in-array-elemmatch">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find({
+  comments: {
+     $elemMatch: {
+       user: 'Mary Williams'
+       }
+    }
+  }
+)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1ab07bf" class="outline-2">
+<h2 id="add-index"><span class="section-number-2">26</span> Add Index</h2>
+<div class="outline-text-2" id="text-add-index">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.createIndex({ title: 'text' })
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgeea45da" class="outline-2">
+<h2 id="text-search"><span class="section-number-2">27</span> Text Search (Single Word)</h2>
+<div class="outline-text-2" id="text-text-search">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find({
+  $text: {
+    $search: "Post"
+    }
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0940aa2" class="outline-2">
+<h2 id="text-search"><span class="section-number-2">28</span> Text Search (Match Any of the Search Terms)</h2>
+<div class="outline-text-2" id="text-text-search">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find({
+  $text: {
+    $search: "Post One Two"
+    }
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9e8d97e" class="outline-2">
+<h2 id="text-search"><span class="section-number-2">29</span> Text Search (a Phrase)</h2>
+<div class="outline-text-2" id="text-text-search">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find({
+  $text: {
+    $search: "\"Post One\""
+    }
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2f84836" class="outline-2">
+<h2 id="greater-less-than"><span class="section-number-2">30</span> Greater &amp; Less Than</h2>
+<div class="outline-text-2" id="text-greater-less-than">
+<div class="org-src-container">
+<pre class="src src-Javascript">db.posts.find({ views: { $gt: 2 } })
+db.posts.find({ views: { $gte: 7 } })
+db.posts.find({ views: { $lt: 7 } })
+db.posts.find({ views: { $lte: 7 } })
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2020-09-28 Mon 16:45</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
